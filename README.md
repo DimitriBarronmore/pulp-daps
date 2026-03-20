@@ -129,3 +129,5 @@ once, this is substantially less efficient than using the table version of `merg
 Adds the function `f` as a hook to be run immediately after any PDX is loaded. For example, this is used
 internally to keep the `pulp` table synchronized and to manage the return menu.
 
+#### config
+The contents of *'config.json'*, or an empty table if it does not exist.
