@@ -1,48 +1,36 @@
 import "../../pulp_switcher"
-
-defaultPDX = "game1"
--- setReturnMenu("reset", nil)
-
 import "achievements/all"
 
-local data = {
-    achievements = {
-        {
-            id = "my_achievement_1",
-            name = "Achievement 1",
-            description = "Achievement 1 Description",
-        },
-        {
-            id = "my_progress_achievement",
-            name = "My Progress Achievement",
-            description = "My Progress Achievement description",
-            progressMax = 5,
-        },
-        {
-            id = "disks",
-            name = "Collect Disks",
-            description = "Collect Disks",
-            progressMax = 5,
-        }
-	}
-}
+-- setReturnMenu("reset", nil)
 
-achievements.initialize(data)
-achievements.toasts.initialize{
-    toastOnGrant = "true",
-    -- toastOnAdvance = "true",
-}
+if config.toastConfig.pauseWhileToasting == nil then
+    config.toastConfig.pauseWhileToasting = true
+end
 
-local pulp_buffer = playdate.graphics.getDisplayImage()
+local first_run = true
+local pulp_buffer
 addHook(function()
+    if first_run then
+        first_run = false
+        achievements.initialize(config.achData or {})
+        achievements.toasts.initialize(config.toastConfig)
+        achievements.viewer.initialize(config.viewerConfig)
+    end
+
 	local pdup = playdate.update
 	playdate.update = function()
-        if not achievements.toasts.isToasting() then
+        if achievements.toasts.isToasting() then
+            if not pulp_buffer then
+                 pulp_buffer = playdate.graphics.getDisplayImage()
+            end
             playdate.graphics.lockFocus(pulp_buffer)
             pdup()
             playdate.graphics.unlockFocus()
+            pulp_buffer:draw(0, 0)
+        else
+            pulp_buffer = nil
+            pdup()
         end
-        pulp_buffer:draw(0, 0)
 	end
 end)
 

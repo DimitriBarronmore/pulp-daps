@@ -1,0 +1,28 @@
+{
+	"defaultPDX": "game1",
+	"achData": {
+		"achievements": [
+			{
+				"id": "my_achievement_1",
+				"name": "Achievement 1",
+				"description": "Achievement 1 Description"
+			},
+			{
+				"id": "my_progress_achievement",
+				"name": "My Progress Achievement",
+				"description": "My Progress Achievement description",
+				"progressMax": 5
+			},
+			{
+				"id": "disks",
+				"name": "Collect Disks",
+				"description": "Collect Disks",
+				"progressMax": 5
+			}
+		]
+	},
+	"toastConfig": {
+		"toastOnGrant": true,
+		"pauseWhileToasting": true
+	}
+}

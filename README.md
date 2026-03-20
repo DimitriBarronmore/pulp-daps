@@ -41,7 +41,16 @@ the menu item.
 ### Configuration
 
 Some settings can be changed without the use of Lua by modifying the file *'config.json'*.
-By default, this is limited to the directory name of the default game. More advanced templates may use this config for other useful information.
+By default, this is limited to the directory name of the default game. More advanced templates
+such as [the achievements template](examples/achievements/) may use this config for other useful information.
+
+**Example config.json:**
+```json config.json
+{
+	"defaultPDX": "MYGAME"
+}
+
+```
 
 ## Advanced Usage
 
@@ -69,10 +78,9 @@ log "$ module.func ('string', 1.0, true, null, [1, [2, 3], 4], {'key': 'val'})"
 Using this and the information detailed in the next heading, you can defer all kinds of un-pulp-like
 behaviors to Lua code.
 
-### Achievement Example
-
-You can find an example of how to use this switcher to integrate https://github.com/PlaydateSquad/pd-achievements
-into a Pulp game in the examples/achievements subdirectory.
+> **Achievements Template**\
+> You can find an example of how to use this switcher to integrate https://github.com/PlaydateSquad/pd-achievements
+into a Pulp game in [examples/achievements](examples/achievements/).
 
 ### Technical Details for Power Users
 
