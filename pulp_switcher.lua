@@ -11,9 +11,18 @@
 	relativePath - An important internal Pulp variable which makes switchers possible. This must always be the path of the loaded PDX.
 --]]
 
-local getargs = import "argparser"
+json2 = import "json"
+
 local fs = playdate.file
 local ds = playdate.datastore
+
+config = {}
+if fs.exists('config.json') then
+    local df = fs.open('config.json')
+    local txt = df:read(fs.getSize('config.json'))
+    config = json2.decode(txt)
+    df:close()
+end
 
 local orig_print = print
 
@@ -41,7 +50,7 @@ could not find function '%s'
 		end
 		local targs
 		if string.len(args) > 2 then
-			targs = getargs(args:sub(2, -2))
+			targs = json2.getargs(args:sub(2, -2))
 			f(table.unpack(targs))
 		else
 			f()
@@ -109,7 +118,7 @@ pulp = setmetatable({}, {
 -- PDX loading.
 
 currentPDX = false
-defaultPDX = "main"
+defaultPDX = config.defaultPDX or "main"
 ---@param filename string The PDX to load into.
 ---Initializes a new PDX.
 function loadPDX(filename)

@@ -451,7 +451,7 @@ local function generate_arguments(input)
 end
 --]]
 
-local function generate_arguments(input)
+function json.getargs(input)
   local wrapped = "[" .. input .. "]"
   return json.decode(wrapped)
 end
@@ -470,7 +470,7 @@ local tests = {
   "'string', 1.0, true, nil, [1, 2, 3], {'key': 'val'}"
 }
 
-for _, test in ipairs(tests) do print("val:\n" .. inspect(generate_arguments(test)) .. "\n\n") end
+for _, test in ipairs(tests) do print("val:\n" .. inspect(json.getargs(test)) .. "\n\n") end
 --]]
 
-return generate_arguments
+return json
