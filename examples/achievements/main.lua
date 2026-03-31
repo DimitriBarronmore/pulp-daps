@@ -1,12 +1,15 @@
 import "../../pulp_switcher"
 import "achievements/all"
 
--- setReturnMenu("reset", nil)
-
 if config.toastConfig.pauseWhileToasting == nil then
     config.toastConfig.pauseWhileToasting = true
 end
+if config.toastConfig.miniMode == nil then
+    config.toastConfig.miniMode = true
+end
+config.toastConfig.renderMode = "manual"
 
+local pwt = config.toastConfig.pauseWhileToasting
 local first_run = true
 local pulp_buffer
 addHook(function()
@@ -20,13 +23,14 @@ addHook(function()
 	local pdup = playdate.update
 	playdate.update = function()
         if achievements.toasts.isToasting() then
-            if not pulp_buffer then
-                 pulp_buffer = playdate.graphics.getDisplayImage()
+            if pulp_buffer then
+                pulp_buffer:draw(0, 0)
             end
-            playdate.graphics.lockFocus(pulp_buffer)
-            pdup()
-            playdate.graphics.unlockFocus()
-            pulp_buffer:draw(0, 0)
+            if not pwt then
+                pdup()
+            end
+            pulp_buffer = playdate.graphics.getWorkingImage()
+            achievements.toasts.manualUpdate()
         else
             pulp_buffer = nil
             pdup()
