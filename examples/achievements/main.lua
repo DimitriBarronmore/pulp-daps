@@ -22,11 +22,11 @@ addHook(function()
 
 	local pdup = playdate.update
 	playdate.update = function()
-        if achievements.toasts.isToasting() or true then
+        if achievements.toasts.isToasting() then
             if pulp_buffer then
                 pulp_buffer:draw(0, 0)
             end
-            if not pwt or true then
+            if not pwt then
                 pdup()
             end
             pulp_buffer = playdate.graphics.getWorkingImage()
