@@ -13,6 +13,8 @@ This template adds the following fields to *'config.json'*:
 - **(required) achData:** Your achievement configuration data, as described in [achievements.schema.json](https://github.com/PlaydateSquad/pd-achievements/blob/main/achievements.schema.json). (See also [the human-readable documentation](https://github.com/PlaydateSquad/pd-achievements/blob/main/docs/achievements.md#schema).)
 - **toastConfig:** The [config for the achievements/toasts module](https://github.com/PlaydateSquad/pd-achievements/blob/main/docs/toasts.md#schema).
 	- **pauseWhileToasting**: By default, Pulp temporarily pauses while a toast is onscreen. Setting this additional flag to `false` will disable this.
+	- **miniMode**: By default this is explicitly set to true, in order to get around some weird esoteric bugs.
+	- **renderMode**: Unconfigurable. The template always sets this to automatic for the sake of required internal logic.
 - **viewerConfig:** The [config for the achievements/viewer module](https://github.com/PlaydateSquad/pd-achievements/blob/main/docs/viewer.md#schema).
 
 
