@@ -16,6 +16,7 @@ This template adds the following fields to *'config.json'*:
 	- **miniMode**: By default this is explicitly set to true, in order to get around some weird esoteric bugs.
 	- **renderMode**: Unconfigurable. The template always sets this to automatic for the sake of required internal logic.
 - **viewerConfig:** The [config for the achievements/viewer module](https://github.com/PlaydateSquad/pd-achievements/blob/main/docs/viewer.md#schema).
+	- **returnToGameFunction:** Unconfigurable. Used internally to help Pulp handle music timing after the viewer is active.
 
 
 ## Info

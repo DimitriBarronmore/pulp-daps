@@ -22,11 +22,11 @@ addHook(function()
 
 	local pdup = playdate.update
 	playdate.update = function()
-        if achievements.toasts.isToasting() then
+        if achievements.toasts.isToasting() or true then
             if pulp_buffer then
                 pulp_buffer:draw(0, 0)
             end
-            if not pwt then
+            if not pwt or true then
                 pdup()
             end
             pulp_buffer = playdate.graphics.getWorkingImage()
@@ -42,5 +42,26 @@ playdate.gameWillTerminate = function()
     achievements.save()
 end
 
+local sndsec = playdate.sound.getCurrentTime
+local lastsec, behindsec = 0, 0
+playdate.sound.getCurrentTime = function()
+    return sndsec() - behindsec
+end
+local sndres = playdate.sound.resetTime
+playdate.sound.resetTime = function()
+    behindsec = 0
+    sndres()
+end
+
 local sysmenu = playdate.getSystemMenu()
-sysmenu:addMenuItem("cheevos", achievements.viewer.launch)
+local function launchviewer_tracksec()
+    lastsec = sndsec()
+    achievements.viewer.launch()
+end
+local function return_calc_behindsec()
+    local newsec = sndsec()
+    behindsec = behindsec + (newsec - lastsec)
+end
+config.viewerConfig = config.viewerConfig or {}
+config.viewerConfig.returnToGameFunction = return_calc_behindsec
+sysmenu:addMenuItem("cheevos", launchviewer_tracksec)
